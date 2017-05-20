@@ -37,13 +37,14 @@ class StressSpec extends FlatSpec with Matchers {
     // align time to even seconds
     Thread.sleep(2000 - (System.currentTimeMillis() % 2000))
     cronicle.start()
+    Thread.sleep(10)
 
     for {i <- 0 until CheckpointA} {
       withClue(i -> Instant.now()) {
         countA.get() shouldBe expectedA(i)
         countB.get() shouldBe expectedB(i)
       }
-      Thread.sleep(1020)
+      Thread.sleep(1000)
     }
 
     // remove `A` tasks for test it will not running after that
@@ -51,7 +52,7 @@ class StressSpec extends FlatSpec with Matchers {
       .collect { case ScheduledCronJob(t, _) if t.id.startsWith("task a") => t }
       .foreach(cronicle.remove)
 
-    Thread.sleep(CheckpointB * 1020) // running `B` tasks for {checkpointB} seconds
+    Thread.sleep(CheckpointB * 1000) // running `B` tasks for {checkpointB} seconds
 
     countA.get() shouldBe expectedA(CheckpointA)
     countB.get() shouldBe expectedB(CheckpointA + CheckpointB)

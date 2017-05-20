@@ -1,6 +1,8 @@
 Cronicle - precise, cheap & simple cron for Scala
 =================================================
 
+[![Build Status](https://travis-ci.org/klpx/cronicle.svg?branch=master)](https://travis-ci.org/klpx/cronicle) [![Coverage Status](https://coveralls.io/repos/github/klpx/cronicle/badge.svg?branch=master)](https://coveralls.io/github/klpx/cronicle?branch=master)
+
 This is simple cron management library based on [cron4s](https://github.com/alonsodomin/cron4s) (cron expression library)
 
 It use single java.util.Timer (which is precise enough) to schedule
