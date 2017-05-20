@@ -12,8 +12,8 @@ cache:
     - $HOME/.ivy2
 
 script:
-  - sbt compile
-  - sbt coverage test
+  - sbt ++$TRAVIS_SCALA_VERSION compile
+  - sbt ++$TRAVIS_SCALA_VERSION coverage test
 
 after_success:
   - sbt coverageReport coveralls

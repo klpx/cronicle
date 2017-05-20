@@ -13,7 +13,7 @@ class StressSpec extends FlatSpec with Matchers {
   import scala.concurrent.ExecutionContext.Implicits.global
 
   val ParallelSize = 1000
-  val CheckpointA = 60
+  val CheckpointA = 30
   val CheckpointB = 10
 
   "Cronicle" should "precisely run thousands of tasks" in {
@@ -43,7 +43,7 @@ class StressSpec extends FlatSpec with Matchers {
         countA.get() shouldBe expectedA(i)
         countB.get() shouldBe expectedB(i)
       }
-      Thread.sleep(1000)
+      Thread.sleep(1020)
     }
 
     // remove `A` tasks for test it will not running after that
@@ -51,7 +51,7 @@ class StressSpec extends FlatSpec with Matchers {
       .collect { case ScheduledCronJob(t, _) if t.id.startsWith("task a") => t }
       .foreach(cronicle.remove)
 
-    Thread.sleep(CheckpointB * 1000) // running `B` tasks for {checkpointB} seconds
+    Thread.sleep(CheckpointB * 1020) // running `B` tasks for {checkpointB} seconds
 
     countA.get() shouldBe expectedA(CheckpointA)
     countB.get() shouldBe expectedB(CheckpointA + CheckpointB)
